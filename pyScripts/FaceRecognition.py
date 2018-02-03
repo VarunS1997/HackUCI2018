@@ -1,55 +1,20 @@
-import cv2
-from urllib import request
-import facebook, requests
-from io import BytesIO
-from PIL import Image
+import cv2, facebook
 import matplotlib.pyplot as plt
-import numpy
-# %matplotlib incline
+from urllib.request import urlopen
+import numpy as np
 
 
-def test():
-    # get your token from https://developers.facebook.com
-    ACCESS_TOKEN = "EAACEdEose0cBAOk0ELqLM1y18bU006UNZCWQNqBHCZBLwnPga40ZCHP88oZAuJkjXGxR9xendAvLQRftPSQiFGcRDUwXwj6kZAgeBTLtsbBj8XZC65sbYaSIyBJDHuvDYTk45aQKtBfzlvyCrZAgPy3Npzr5IKfs0ivcMMI4u5yUFHIXiXw9fNAw388ZCeZB4Yn3IA3QdAWwzuQZDZD"
-    graph = facebook.GraphAPI(ACCESS_TOKEN)
-
-    USER_ID = "820921224634239"
-    info = graph.get_object(USER_ID, fields='id, name, photos')
-
-    webImage = getWebImage(USER_ID)
-    face, rect = detect_face(webImage)
-    # face.show()
-
-    # print(info)
-    print(getPhotosData(info))
-    print(graph.get_object(USER_ID))
-
-    # feeds = graph.get_connections(USER_ID,'feed')
-    # print(feeds)
-
-def main():
-    pass
-
-def getPhotosData(infoObject) -> list:
-    return infoObject["photos"]["data"]
-
-def imageUrl(id: str) -> str:
-    url = "http://graph.facebook.com/{}/picture?type=large".format(id)
-    print(url)
-    return url
-
-def getWebImage(id: str) -> Image:
-    imageOfUrl = imageUrl(id)
-    response = requests.get(imageOfUrl)
-    img = Image.open(BytesIO(response.content))  # 250,250 resize() ??
-    img = cv2.cvtColor(numpy.array(img), cv2.COLOR_RGB2BGR)
-    return img
-
-def getCameraImage(id: str) -> Image:
-    pass
-
+ACCESS_TOKEN = "EAADD6RCZBH3kBAMDQIQXk4CiyBD5gBriT6kHuCisN299UBFv8bXi1P4fkWmE1A5AjzYRGugYVCsMy1gZBjA1idRdJ0OzsqZBeQWhBYtS20dfPhBOIQ4U5qooIfZBX9HiWxs56XkJWdRBB73j0IuxEBYNIj8wxPzCLefx1B8c2QZDZD"
+TEST_ID = "820921224634239"
+SCALE_FACTOR = 1.01
+MIN_NEIGHBORS = 5
+PERCENTAGE = .1
+DICT = {}
 
 def detect_face(img):
+    height, width, channels = img.shape
+    height = int(height * PERCENTAGE)
+    width = int(width * PERCENTAGE)
     # convert the test image to gray image as opencv face detector expects gray images
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -59,10 +24,11 @@ def detect_face(img):
 
     # let's detect multiscale (some images may be closer to camera than others) images
     # result is a list of faces
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5);
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=SCALE_FACTOR, minNeighbors=MIN_NEIGHBORS, minSize=(height,width))
 
     # if no faces are detected then return original img
     if (len(faces) == 0):
+        print("No Faces Detected!!")
         return None, None
 
     # under the assumption that there will be only one face,
@@ -72,7 +38,117 @@ def detect_face(img):
     # return only the face part of the image
     return gray[y:y + w, x:x + h], faces[0]
 
+def convertToRGB(img):
+    return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+def drawAroundFaces(colored_img):
+    height, width, channels = colored_img.shape
+    height = int(height * PERCENTAGE)
+    width = int(width * PERCENTAGE)
+
+    f_cascade = cv2.CascadeClassifier('opencv-files/lbpcascade_frontalface.xml')
+    img_copy = colored_img.copy()
+    gray = cv2.cvtColor(img_copy, cv2.COLOR_BGR2GRAY)
+
+    # let's detect multiscale (some images may be closer to camera than others) images
+    faces = f_cascade.detectMultiScale(gray, scaleFactor=SCALE_FACTOR, minNeighbors=MIN_NEIGHBORS, minSize=(height,width))
+    print(faces)
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+    plt.imshow(convertToRGB(img_copy))
+    plt.show()
+
+    return img_copy
+
+########################## FACEBOOK API ##########################
+
+def getPhotosData(infoObject) -> list:
+    print(infoObject)
+    return infoObject["photos"]["data"]
+
+def getImageUrl(id: str) -> str:
+    url = "http://graph.facebook.com/{}/picture?type=large".format(id)
+    print(url)
+    return url
+
+def trainFaceRecognition(id_list: list):
+    graph = facebook.GraphAPI(ACCESS_TOKEN)
+    for id in id_list:
+        # infoObject = getPhotosData()
+        infoObject = graph.get_object(id, fields='id, name, photos')
+        for photo in infoObject:
+            print(photo)
+
+        webImage = urlToImageNp(getImageUrl(id))
+
+def urlToImageNp(url: str):
+    #Grabbing Image through Web Url
+    resp = urlopen(url)
+    image = np.asarray(bytearray(resp.read()), dtype="uint8")
+    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+
+    #Grabbing Image Locally
+    # image = cv2.imread("arnold.JPG")
+
+    return image
+
+def test():
+    graph = facebook.GraphAPI(ACCESS_TOKEN)
+    webImageUrl = getImageUrl(TEST_ID)
+    testImage = urlToImageNp(webImageUrl)
+    # testImage = cv2.imread("arnold.jpg")
+    faces = detect_face(testImage)
+    drawAroundFaces(testImage)
+    print(faces)
+    # test2 = cv2.imread('myself.jpg')
+    # plt.imshow(convertToRGB(faces_detected_img))
+    # plt.show()
+    # print(faces_detected_img)
+
+def testGatherTrainingData(id_list):
+    faces = []
+    labels = []
+    id_list = ["820921224634239"]
+    # graph = facebook.GraphAPI(ACCESS_TOKEN)
+    for n,id in enumerate(id_list):
+        DICT[n] = id
+        webImageUrl = getImageUrl(TEST_ID)
+        testImage = urlToImageNp(webImageUrl)
+        face, rect = detect_face(testImage)
+        drawAroundFaces(testImage)
+        if face is not None:
+            faces.append(face)
+            labels.append(n)
+            print(faces)
+
+    return faces, labels
+
+
+def predict(test_img, face_recognizer):
+    # make a copy of the image as we don't want to chang original image
+    img = test_img.copy()
+    # detect face from the image
+    face, rect = detect_face(img)
+    faceBorder = drawAroundFaces(img)
+    plt.imshow(faceBorder)
+    plt.show()
+
+    # predict the image using our face recognizer
+    prediction = face_recognizer.predict(face)
+    print("PREDICTED:", prediction)
+    return prediction[0]
+
 if __name__ == '__main__':
-    print("OpenCV Version",cv2.__version__)
-    main()
-    test()
+    # test()
+    faces, labels = testGatherTrainingData([])
+    print("Total faces: ", len(faces))
+    print("Total labels: ", len(labels), labels)
+    print("nparray:", np.array(labels))
+    face_recognizer = cv2.face.LBPHFaceRecognizer_create()
+    face_recognizer.train(np.array(faces), np.array(labels))
+
+
+    testImg = cv2.imread("arnold2.jpg")
+    print(predict(testImg, face_recognizer))
+    # testImg = cv2.cvtColor(testImg, cv2.COLOR_BGR2GRAY)
