@@ -3,6 +3,7 @@
         <ul id="footer-list" class="">
             <li><a href="about.php">About</a></li>
             <li><a href="contact.php">Contact</a></li>
+            <li><a href="privacypolicy.htm">Privacy Policy</a></li>
         </ul>
         <div class="left-float left-align">
             Sanatree<br />
