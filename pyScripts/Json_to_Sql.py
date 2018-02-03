@@ -34,7 +34,11 @@ if __name__ == '__main__':
 	for each in data['append']:
 		ID = up.getID(each['fName'], each['lName'], each['DOB'], each['Address'])
 		if ID == None:
-			raise Exception("User not found in database")
+			try:
+				raise Exception("User not found in database")
+			except:
+				file = open("../LOGS/log.txt", "w")
+				file.write(each["fName"] +" "+ each["lName"]+ " what not found in the database")
 		else:
 			up.addHistory(ID, each['Date'], each['History'])
 
