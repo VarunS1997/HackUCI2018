@@ -14,9 +14,9 @@
     <div class="wrapper" id="body-wrapper">
         <div class="subsection-wrapper wrapper">
             <div class="subsection">
-                <div class="title">Fuck you</div>
+                <div class="title">Hello World</div>
                 <p>
-                    And your sister(s).
+                    Hello World
                 </p>
             </div>
         </div>
