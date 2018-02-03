@@ -1,0 +1,340 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    font-weight: 300;
+    font-family: 'Work Sans', serif;
+}
+
+html{
+    font-size: 18px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    display: inline-block;
+    color: rgb(180, 180, 180);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a, input[type="submit"]{
+    transition: 0.25s;
+}
+
+a:hover {
+    color: rgb(0, 0, 0);
+}
+
+p {
+    line-height: 1.2em;
+}
+
+/**/
+/* General */
+/**/
+div.wrapper {
+    position: relative;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+}
+
+div.backgrounded {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+a.button{
+    cursor: pointer;
+    background-color: rgb(10, 255, 232);
+    color: rgb(0, 0, 0);
+    border-radius: 3vw;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    margin: 10px 10px;
+}
+
+.button:hover{
+    background-color: rgb(0, 224, 197);
+}
+
+.submit-button{
+    padding: 10px 30px;
+    font-family: 'Work Sans', serif;
+}
+
+:disabled.submit-button{
+    cursor: inherit;
+    background-color: rgb(200, 200, 200);
+    color: rgb(150, 150, 150);
+}
+
+input[type=text]{
+    padding-left: 3px;
+    width: 25em;
+}
+
+img.rounded{
+    border-radius: 20vw;
+}
+
+table.tableList{
+    width: 100%;
+    position: relative;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(0, 0, 0);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+table.tableList th, table.tableList td{
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(0, 0, 0);
+    padding: 10px;
+    text-align: center;
+    font-size: .8em;
+}
+
+table.tableList .checkCell{
+    width: 50px;
+}
+
+table.tableList tbody tr:hover{
+    background-color:rgb(200, 200, 200);
+    cursor: pointer;
+}
+
+/* Text Formatting */
+.bold{
+    font-weight: 700;
+}
+
+.light{
+    font-weight: 300;
+}
+
+.colored{
+    color: rgb(0, 224, 197);
+}
+
+.heading{
+    display: block;
+    margin-top: 25px;
+    font-size: 1.5em;
+}
+
+.title {
+    display: block;
+    text-align: center;
+    width: 90%;
+    margin: 0px auto .7em auto;
+    padding: 5px 0px;
+    font-size: 2em;
+    line-height: 1.2em;
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: inherit;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+.left-align{
+    text-align: left;
+}
+
+.center{
+    text-align: center;
+}
+
+.right-align{
+    text-align: right;
+}
+
+.left-float{
+    float:left;
+}
+
+.right-float{
+    float:right;
+}
+/**/
+/* General Branding*/
+/**/
+img.sanatree-logo {
+    width: 25vw;
+    max-width: 225px;
+    margin: 20px 30px;
+}
+
+div.sanatree-logo-container {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/**/
+/* Navbar */
+/**/
+div#page-header-wrapper {
+    text-align: left;
+}
+
+div#navigation-bar-container {
+    position: absolute;
+    z-index: 10;
+    bottom: 0px;
+    right: 0px;
+    color: rgb(255, 255, 255);
+}
+
+ul#navigation-bar {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    overflow: hidden;
+    font-weight: 400;
+}
+
+ul#navigation-bar li {
+    display: inline-block;
+    float: left;
+}
+
+ul#navigation-bar li a {
+    display: inline-block;
+    padding: 10px 3vw;
+    color: inherit;
+}
+
+ul#navigation-bar li a:hover {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+}
+
+/**/
+/* Footer */
+/**/
+div#footer-wrapper{
+    padding: 10px 10%;
+    text-align: right;
+}
+
+div#footer-subsection{
+    margin: 0px;
+}
+
+ul#footer-list{
+    display: inline-block;
+    list-style-type: none;
+    vertical-align: middle;
+    margin: 0px 5px;
+}
+
+ul#footer-list li{
+    display: block;
+    text-align: right;
+}
+
+ul#footer-list li a{
+    font-size: 1.1em;
+    line-height: 1.3em;
+    color: rgb(255, 255, 255);
+}
+
+ul#footer-list li a:hover{
+    color: rgb(0, 224, 197);
+}
+
+/**/
+/* Body Structuring */
+/**/
+div#body-wrapper{
+    padding: 10px 0px;
+}
+
+div.subsection-wrapper {
+    padding: 0px;
+    margin: 15px 0px;
+}
+
+div.subsection-wrapper:first-child{
+    margin-top: 0px;
+}
+
+div.subsection-wrapper:last-child{
+    margin-bottom: 0px;
+}
+
+div.subsection {
+    display: inline-block;
+    width: 70%;
+    padding: 15px 0px;
+    margin: 0px auto;
+}
+
+div.subsection p:first-child {
+    margin-top: 0px;
+}
+
+div.subsection p:last-child {
+    margin-bottom: 0px;
+}
+
+div.subsection p a {
+    display: inline;
+}
+
+div.imaged-subsection img {
+    display: inline-block;
+    width: 20%;
+    vertical-align: middle;
+}
+
+div.imaged-subsection div.img-text {
+    display: inline-block;
+    width: 70%;
+    vertical-align: middle;
+    text-align: left;
+}
+
+div.imaged-subsection div.img-text:first-child {
+    padding-right: 35px;
+}
+
+div.imaged-subsection div.img-text:last-child {
+    padding-left: 35px;
+}
+
+div.photo-subsection .img-container{
+    width: 15%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px 10px;
+}
+
+div.photo-subsection .img-container img{
+    width: 100%;
+    margin-bottom: 10px;
+    display: block;
+}
+
+div.img-strip{
+    width: 80%;
+    height: 150px;
+    margin: 0px auto;
+    overflow: hidden;
+}
+
+div.img-strip img{
+    height: 100%;
+    width: auto;
+}

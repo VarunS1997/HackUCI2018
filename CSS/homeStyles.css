@@ -1,0 +1,63 @@
+/**/
+/* OVERRIDES */
+/**/
+div#page-header-wrapper{
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+div#navigation-bar-container{
+    top: 0px;
+    bottom: auto;
+}
+
+ul#navigation-bar{
+    padding: 10px;
+}
+
+/**/
+/* ADDITIONAL STYLING */
+/**/
+div#splash-wrapper{
+    width: 100%;
+    height: 100vh;
+    margin-bottom: -1px;
+    background-color: rgb(0, 0, 0);
+    background-image: url('../imageAssets/splashImage.jpg');
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+}
+
+div#splash-wrapper img{
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+}
+
+div#splash-content{
+    color: rgb(255, 255, 255);
+    line-height: 1.5em;
+    background-color: rgba(0, 0, 0, .6);
+    padding: 10px 25%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+div#splash-content a{
+    color: rgb(0, 0, 0);
+}
+
+div#splash-content a:hover{
+    color: rgb(200, 200, 255);
+}
+
+div#splash-content a.button:hover{
+    color: rgb(0, 0, 0);
+}
