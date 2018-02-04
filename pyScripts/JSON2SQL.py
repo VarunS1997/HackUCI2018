@@ -1,5 +1,7 @@
+#!/usr/bin/python
 import MySQLdb
 import json
+import datetime
 import sys
 
 class DataInput:
@@ -8,8 +10,8 @@ class DataInput:
 	insertHistoryCommand = '''INSERT INTO `histories` (`USER_ID`, `DATE`, `DESCRIPTION`) VALUES ('{}', '{}', '{}')'''
 	lookUpHistoryCommand = '''SELECT * FROM `histories` WHERE `USER_ID` LIKE '{}' '''
 
-	def __init__(self, hst,datab):
-		self.db = MySQLdb.connect(host = hst, db = datab)
+	def __init__(self, hst = "localhost", user= "sanatree_hackuci", passwd= "H@ckUC!2018", datab = "sanatree_userDB"):
+		self.db = MySQLdb.connect(host = hst, user= user, passwd= passwd, db = datab)
 		self.cursor = self.db.cursor()
 
 	def getUser(self,fName, lName, dob, address):
@@ -27,18 +29,30 @@ class DataInput:
 		self.cursor.execute(self.insertHistoryCommand.format(ID,date,history))
 		self.db.commit()
 
-if __name__ == '__main__':
-	file = open(sys.argv[0], 'r')
-	data = json.load(file)
-	up = DataInput("localhost", "sanatree_userDB")
-	for each in data['append']:
-		ID = up.getID(each['fName'], each['lName'], each['DOB'], each['Address'])
-		if ID == None:
-			try:
-				raise Exception("User not found in database")
-			except:
-				file = open("../LOGS/log.txt", "w")
-				file.write(each["fName"] +" "+ each["lName"]+ " what not found in the database")
-		else:
-			up.addHistory(ID, each['Date'], each['History'])
+try:
+	nl = "<br>"
+	jFile = open(sys.argv[1], 'r')
+	# data = json.load(jFile)
 
+	logFile = open("../LOGS/log.txt", "w")
+
+	up = DataInput()
+	print(nl)
+	print("STARTING..."+nl)
+	print(, nl)
+
+	# for each in data['append']:
+	# 	ID = up.getID(each['fName'], each['lName'], each['DOB'], each['Address'])
+	# 	if ID == None:
+	# 		v = each["fName"] +" "+ each["lName"]+ " what not found in the database"
+    #
+	# 		logFile.write(v)
+	# 		print(v)
+	# 	else:
+	# 		v = each["fName"] +" "+ each["lName"]+ " what found in the database"
+    #
+	# 		logFile.write(v)
+	# 		print(v)
+	# 		up.addHistory(ID, each['Date'], each['History'])
+except Exception as e:
+	print("{}: {}".format(type(e), str(e)))
