@@ -21,23 +21,32 @@ if($FBError || (isset($_GET["error"]) and $_GET["error"] == "access_denied")){
     <div class="wrapper" id="body-wrapper">
         <div class="subsection-wrapper wrapper">
             <div class="title">
-                Welcome<?php if(isset($fName)){
-                    echo ", " . $fName;
+                Welcome<?php if(isset($_SESSION["FIRST_NAME"])){
+                    echo ", " . $_SESSION["FIRST_NAME"];
                 } ?>
             </div>
             <div class="subsection">
                 <?php
-                if(isset($fName)){
-                    echo "FIRST NAME: " . $fName . "<br />";
+                if(isset($_SESSION["FIRST_NAME"])){
+                    echo "<p>FIRST NAME: " . $_SESSION["FIRST_NAME"] . "</p>";
                 }
-                if(isset($lName)){
-                    echo "LAST NAME: " . $lName . "<br />";
+                if(isset($_SESSION["LAST_NAME"])){
+                    echo "<p>LAST NAME: " . $_SESSION["LAST_NAME"] . "</p>";
                 }
-                if(isset($DOB)){
-                    echo "DOB: " . $DOB . "<br />";
+                if(isset($_SESSION["DOB"])){
+                    echo "<p>DOB: " . $_SESSION["DOB"] . "</p>";
                 }
-                if(isset($fbID)){
-                    echo "FB ID: " . $fbID . "<br />";
+                if(isset($_SESSION["FACEBOOK_ID"])){
+                    echo "<p>FB ID: " . $_SESSION["FACEBOOK_ID"] . "</p>";
+                }
+                if(isset($_SESSION["FB_FRIENDS"])){
+                    echo "<p>-- FB FRIENDS --<br/>";
+
+                    foreach($_SESSION["FB_FRIENDS"] as $friend){
+                        echo "Name: " . $friend["name"] . "<br />";
+                    }
+
+                    echo "</p>";
                 }
                  ?>
             </div>

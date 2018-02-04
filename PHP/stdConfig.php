@@ -81,7 +81,7 @@ if(!isset($_SESSION["FB_ACCESS_TOKEN"]) or !isset($_SESSION["FB_TOKEN_META"])){
 }
 
 // MySQL
-if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"])){
+if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"]) and !(isset($_SESSION["IN_DB"]) and $_SESSION["IN_DB"])){
     // MySQL
     $conn = loadSQL();
 
@@ -95,7 +95,7 @@ if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"])){
         try {
           // Returns a `Facebook\FacebookResponse` object
           $token = $_SESSION["FB_ACCESS_TOKEN"]->getValue();
-          $response = $fb->get('/me?fields=id,name, birthday', $token);
+          $response = $fb->get('/me?fields=id,name, birthday, friends', $token);
 
           $user = $response->getGraphUser();
 
@@ -117,6 +117,16 @@ if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"])){
               $InsertSQL->bind_param("sssssss", $fName, $lName, $DOB, $date,$fbID, $address, $token);
               $InsertSQL->execute();
           }
+
+          $_SESSION["FIRST_NAME"] = $fName;
+          $_SESSION["LAST_NAME"] = $lName;
+          $_SESSION["DOB"] = $DOB;
+          $_SESSION["FACEBOOK_ID"] = $fbID;
+          $_SESSION["ADDRESS"] = $address;
+
+          $_SESSION["FB_FRIENDS"] = $user["friends"];
+
+          $_SESSION["IN_DB"] = true;
         } catch(Facebook\Exceptions\FacebookSDKException $e) {
 
         } catch(Facebook\Exceptions\FacebookResponseException $e){
