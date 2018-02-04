@@ -1,9 +1,10 @@
+<?php require "PHP/stdConfig.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Sanatree</title>
 
-    <?php require "PHP/stdConfig.php"; ?>
+    <?php require "PHP/stdHeader.php"; ?>
 
     <link rel="stylesheet" type="text/css" href="CSS/homeStyles.css" />
 </head>
@@ -16,7 +17,7 @@
         </div>
         <div id="navigation-bar-container">
             <ul id="navigation-bar">
-                <li><a href="./">SanaTree</a></li>
+                <li><a href="myAccount.php">Get Started</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
             </ul>
@@ -28,7 +29,7 @@
                 Live | Connect | <span class="colored">Thrive</span>
             </div>
             SanaTree leads the way in social analytics that help you live a safer, healthier, more-connected life. With leading analysis techniques, we provide your doctor with anything and everything they need to make sure YOU get the best care you can.<br />
-            <a class="button" href="#start">Get Started Now!</a>
+            <a class="button" href="myAccount.php">Get Started Now!</a>
         </div>
     </div>
     <div class="wrapper" id="body-wrapper">

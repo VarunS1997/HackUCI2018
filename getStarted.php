@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Contact | Sanatree</title>
+    <title>About | Sanatree</title>
 
     <?php require "PHP/stdHeader.php"; ?>
 
@@ -15,10 +15,8 @@
     <div class="wrapper" id="body-wrapper">
         <div class="subsection-wrapper wrapper">
             <div class="subsection">
-                <div class="title">Hello World</div>
-                <p>
-                    Hello World
-                </p>
+                <div class="title">Hello, Let's Begin</div>
+                <a class="button" href="PHP/facebookLogin.php">Get Started With Facebook</a>
             </div>
         </div>
     </div>

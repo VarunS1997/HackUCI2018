@@ -18,8 +18,8 @@ $fb = new Facebook\Facebook([
 
 $helper = $fb->getRedirectLoginHelper();
 
-$permissions = ['email']; // Optional permissions
-$loginUrl = $helper->getLoginUrl('http://localhost:8080/HackUCI2018/myAccount.php', $permissions);
+$permissions = ['email', "user_friends", "user_photos", "user_birthday"]; // Optional permissions
+$loginUrl = $helper->getLoginUrl('https://sanatree.tech/myAccount.php', $permissions);
 
 header("Location: ".$loginUrl)
 

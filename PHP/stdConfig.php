@@ -5,6 +5,32 @@ if (!session_id()) {
     session_start();
 }
 
+function loadSQL(){
+    mysqli_report(MYSQLI_REPORT_STRICT);
+
+    try{
+        $server = "localhost";
+        $username = "root";
+        $password = "";
+        $db = "sanatree_userdb";
+
+        $conn = new mysqli($server, $username, $password, $db);
+    } catch (mysqli_sql_exception $e){
+        try{
+            $server = "localhost";
+            $username = "sanatree_hackuci";
+            $password = "H@ckUC!2018";
+            $db = "sanatree_userDB";
+
+            $conn = new mysqli($server, $username, $password, $db);
+        } catch (mysqli_sql_exception $e){
+            throw new Exception("Service unavailable. Authentication failed. Aborted processes.... " . $e->getMessage());
+        }
+    }
+
+    return $conn;
+}
+
  // FACEBOOK
 $APP_ID = '215405775691641';
 $APP_SECRET = '57f4a9a49a23094846505ff5ef84eb47';
@@ -51,6 +77,52 @@ if(!isset($_SESSION["FB_ACCESS_TOKEN"]) or !isset($_SESSION["FB_TOKEN_META"])){
         $FBError = false;
     } catch(Facebook\Exceptions\FacebookSDKException $e){
         $FBError = true;
+    }
+}
+
+// MySQL
+if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"])){
+    // MySQL
+    $conn = loadSQL();
+
+    $usersTable = "Users";
+    $histTable = "Histories";
+
+    $SearchSQL = $conn->prepare("SELECT * FROM $usersTable WHERE FIRST_NAME=? AND LAST_NAME=? AND DOB=?");
+    $InsertSQL = $conn->prepare("INSERT INTO $usersTable (FIRST_NAME, LAST_NAME, DOB, START_DATE, USER_ID, ADDRESS) VALUES (?, ?, ?, ?, ?, ?)");
+
+    if($SearchSQL != false && $InsertSQL != false){
+        try {
+          // Returns a `Facebook\FacebookResponse` object
+          $response = $fb->get('/me?fields=id,name, birthday', $_SESSION["FB_ACCESS_TOKEN"]->getValue());
+
+          $user = $response->getGraphUser();
+
+          $name = explode(" ", $user["name"]);
+
+          $fName = $name[0];
+          $lName = $name[count($name)-1];
+          $DOB = (is_null($user["birthday"])) ? "NULL" : $user["birthday"]->format("m/d/Y");
+          $fbID = $user["id"];
+
+
+          $SearchSQL->bind_param("sss", $fName, $lName, $DOB);
+          $SearchSQL->execute();
+          $SearchSQL->store_result();
+
+          if($SearchSQL->num_rows() == 0){
+              $date = date("m/d/Y");
+              $InsertSQL->bind_param("ssssss", $fName, $lName, $DOB, $date,$fbID, $fName);
+              $InsertSQL->execute();
+          }
+        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+
+        } catch(Facebook\Exceptions\FacebookResponseException $e){
+
+        }
+    } else{
+        $conn->close();
+        throw new Exception("Prepared Statement could not be made... ");
     }
 }
 
