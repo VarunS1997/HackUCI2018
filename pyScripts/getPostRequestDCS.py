@@ -7,6 +7,5 @@ if __name__ == '__main__':
 	while(True):
 		r = requests.post('https://sanatree.tech/PHP/DCT.php')
 		if(r.text != "NULL"):
-			idList = [] #Type should be str
-			fr.createClassifer(idList)
+			pass
 		time.sleep(1);
