@@ -50,7 +50,11 @@
             <div class="subsection">
                 <div class="title">Challenges We Ran Into</div>
                 <p>
-                    Implementing the facial recognition would be one of our bigger challenges as we had to train it to be able to recognize and identify people. We then mostly had a lot of problem with server configurations as we were trying to use the .tech domain but had issues with DNS but eventually got it to work with the domain. We also had trouble configuring the server as we did not know that Python 3.2.3 was already installed and could've been used by calling python3 for a script. Also, the use of Php to run the Python script made things a lot harder to debug as there were no console and error messages did not show up. Overall we feel that despite the challenges we had we did the best we could to implement the idea we had imagined.
+                    Some of our greatest challenges included the facial recognition algorithm, server set-up, and communication protocols.
+                </p><p>
+                    In regards to server set-up, once we obtained the .tech domain, we faced significant challenges in properly pointing the namespace servers to the appropriate hosting service. Furthermore, once the servers were indeed pointing correctly, we faced additional issues with SSL. Typically, the SSL certificate could not be validated due to domain name mismatches. Still, this, too was overcome. Last, but certainly not least, we also had to work within the parameters of our host. In other words, our code had to be designed within a development environment that we did not have full control of. In fact, we had to accommodate Python 3.2 and distributed computing methods, when our original design had no such portions.
+                </p><p>
+                    Finally, in the design of such a complex system, we had to implement our own communication processes to optimize server loads with user demands. Moreover, these sort of communications became necessary to perform the full functionality of this website. For security reasons, the full details will not be discussed.
                 </p>
             </div>
         </div>
@@ -58,7 +62,7 @@
             <div class="subsection">
                 <div class="title">Accomplishments</div>
                 <p>
-                    Each individual member of the team has accomplished something that was given out of their comfort zone of development. One of our members was able to implement a machine learning algorithm for the first time outside of class. Another learned SQL commands and worked with the SQLdt library in Python to send queries to the database. For two of our members, it was their first time attending a Hackathon, including a freshman. Also, working with the server we rented was also an accomplishment on its own because of the lack of support we had with it from the company we rented it from.
+                    Each individual member of the team has accomplished something that was given out of their comfort zone of development. One of our members was able to implement a machine learning algorithm for the first time outside of class. Another learned SQL commands and worked with the SQLdt library in Python to send queries to the database. For two of our members, it was their first time attending a Hackathon, including a freshman.
                 </p>
             </div>
         </div>
