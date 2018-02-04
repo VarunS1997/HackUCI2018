@@ -1,14 +1,21 @@
 import cv2, facebook
+import cv2.face as face
 import matplotlib.pyplot as plt
 from urllib.request import urlopen
 import numpy as np
-
+import pickle
 
 ACCESS_TOKEN = "EAADD6RCZBH3kBAMDQIQXk4CiyBD5gBriT6kHuCisN299UBFv8bXi1P4fkWmE1A5AjzYRGugYVCsMy1gZBjA1idRdJ0OzsqZBeQWhBYtS20dfPhBOIQ4U5qooIfZBX9HiWxs56XkJWdRBB73j0IuxEBYNIj8wxPzCLefx1B8c2QZDZD"
 TEST_ID = "820921224634239"
+HOST = "192.254.233.160"
+DB = "sanatree_userDB"
+USERNAME = "sanatree_hackuci"
+PASSWORD = "rHDekqSx#FaD"
 SCALE_FACTOR = 1.01
-MIN_NEIGHBORS = 5
+MIN_NEIGHBORS = 6
 PERCENTAGE = .1
+HAARCASCADE = "opencv-files/haarcascade_frontalface_alt.xml"
+LBP = "opencv-files/lbpcascade_frontalface.xml"
 DICT = {}
 
 def detect_face(img):
@@ -20,7 +27,7 @@ def detect_face(img):
 
     # load OpenCV face detector, I am using LBP which is fast
     # there is also a more accurate but slow Haar classifier
-    face_cascade = cv2.CascadeClassifier('opencv-files/lbpcascade_frontalface.xml')
+    face_cascade = cv2.CascadeClassifier(HAARCASCADE)
 
     # let's detect multiscale (some images may be closer to camera than others) images
     # result is a list of faces
@@ -46,7 +53,7 @@ def drawAroundFaces(colored_img):
     height = int(height * PERCENTAGE)
     width = int(width * PERCENTAGE)
 
-    f_cascade = cv2.CascadeClassifier('opencv-files/lbpcascade_frontalface.xml')
+    f_cascade = cv2.CascadeClassifier(HAARCASCADE)
     img_copy = colored_img.copy()
     gray = cv2.cvtColor(img_copy, cv2.COLOR_BGR2GRAY)
 
@@ -72,58 +79,80 @@ def getImageUrl(id: str) -> str:
     print(url)
     return url
 
-def trainFaceRecognition(id_list: list):
-    graph = facebook.GraphAPI(ACCESS_TOKEN)
-    for id in id_list:
-        # infoObject = getPhotosData()
-        infoObject = graph.get_object(id, fields='id, name, photos')
-        for photo in infoObject:
-            print(photo)
-
-        webImage = urlToImageNp(getImageUrl(id))
-
 def urlToImageNp(url: str):
     #Grabbing Image through Web Url
     resp = urlopen(url)
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
-    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-
-    #Grabbing Image Locally
-    # image = cv2.imread("arnold.JPG")
-
-    return image
-
-def test():
-    graph = facebook.GraphAPI(ACCESS_TOKEN)
-    webImageUrl = getImageUrl(TEST_ID)
-    testImage = urlToImageNp(webImageUrl)
-    # testImage = cv2.imread("arnold.jpg")
-    faces = detect_face(testImage)
-    drawAroundFaces(testImage)
-    print(faces)
-    # test2 = cv2.imread('myself.jpg')
-    # plt.imshow(convertToRGB(faces_detected_img))
-    # plt.show()
-    # print(faces_detected_img)
+    return cv2.imdecode(image, cv2.IMREAD_COLOR)
 
 def testGatherTrainingData(id_list):
     faces = []
     labels = []
-    id_list = ["820921224634239"]
-    # graph = facebook.GraphAPI(ACCESS_TOKEN)
+    # id_list = ["10204090278614708", "1849926508352506", "2069021659993333", "1645206745539012"]
+    graph = facebook.GraphAPI(ACCESS_TOKEN)
     for n,id in enumerate(id_list):
+        object = graph.get_object(id)
+        print(object)
         DICT[n] = id
-        webImageUrl = getImageUrl(TEST_ID)
+        webImageUrl = getImageUrl(id)
         testImage = urlToImageNp(webImageUrl)
         face, rect = detect_face(testImage)
         drawAroundFaces(testImage)
         if face is not None:
             faces.append(face)
             labels.append(n)
-            print(faces)
+            # print(faces)
+        #Hard Coding in more Photo Data
+        if "Jackson Tsoi" in object["name"]:
+            img1 = cv2.imread("../imageAssets/Jackson/1.jpg")
+            face, rect = detect_face(img1)
+            drawAroundFaces(img1)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
+            img2 = cv2.imread("../imageAssets/Jackson/2.jpg")
+            face, rect = detect_face(img2)
+            drawAroundFaces(img2)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
+        elif "Simon Lee" in object["name"]:
+            img1 = cv2.imread("../imageAssets/Simon/1.jpg")
+            face, rect = detect_face(img1)
+            drawAroundFaces(img1)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
+            img2 = cv2.imread("../imageAssets/Simon/2.jpg")
+            face, rect = detect_face(img1)
+            drawAroundFaces(img2)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
+        elif "Lucas Verde" in object["name"]:
+            img1 = cv2.imread("../imageAssets/Lucas/1.jpg")
+            face, rect = detect_face(img1)
+            drawAroundFaces(img1)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
+        elif "Varun Singh" in object["name"]:
+            img1 = cv2.imread("../imageAssets/Varun/1.jpg")
+            face, rect = detect_face(img1)
+            drawAroundFaces(img1)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
 
     return faces, labels
 
+def createClassifer(id_list:list):
+    faces, labels = testGatherTrainingData(id_list)
+    print("Total faces: ", len(faces))
+    print("Total labels: ", len(labels), labels)
+    face_recognizer = face.LBPHFaceRecognizer_create()
+    face_recognizer.train(np.array(faces), np.array(labels))
+    return face_recognizer
 
 def predict(test_img, face_recognizer):
     # make a copy of the image as we don't want to chang original image
@@ -131,8 +160,6 @@ def predict(test_img, face_recognizer):
     # detect face from the image
     face, rect = detect_face(img)
     faceBorder = drawAroundFaces(img)
-    plt.imshow(faceBorder)
-    plt.show()
 
     # predict the image using our face recognizer
     prediction = face_recognizer.predict(face)
@@ -140,15 +167,16 @@ def predict(test_img, face_recognizer):
     return prediction[0]
 
 if __name__ == '__main__':
-    # test()
-    faces, labels = testGatherTrainingData([])
-    print("Total faces: ", len(faces))
-    print("Total labels: ", len(labels), labels)
-    print("nparray:", np.array(labels))
-    face_recognizer = cv2.face.LBPHFaceRecognizer_create()
-    face_recognizer.train(np.array(faces), np.array(labels))
+    fakeData = ["10204090278614708", "1849926508352506", "2069021659993333", "1645206745539012"]
+    # faces, labels = testGatherTrainingData(fakeData)
+    # face_recognizer = face.LBPHFaceRecognizer_create()
+    # face_recognizer.train(np.array(faces), np.array(labels))
+    face_recognizer = createClassifer(fakeData)
+    # testImageCapture = cv2.imread("glasses.jpg")
+    # predict(testImageCapture, face_recognizer)
 
-
-    testImg = cv2.imread("arnold2.jpg")
-    print(predict(testImg, face_recognizer))
-    # testImg = cv2.cvtColor(testImg, cv2.COLOR_BGR2GRAY)
+    repFunc = repr(face_recognizer)
+    rep = repr(DICT)
+    print(rep)
+    print(repFunc)
+    pass
