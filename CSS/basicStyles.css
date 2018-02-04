@@ -48,6 +48,15 @@ div.backgrounded {
     color: rgb(255, 255, 255);
 }
 
+div.blueBackgrounded {
+    background-color: rgb(0, 194, 167);
+    color: rgb(255, 255, 255);
+}
+
+div.extra-padding.subsection{
+    padding: 3em;
+}
+
 a.button{
     cursor: pointer;
     background-color: rgb(0, 224, 197);
@@ -166,6 +175,10 @@ table.tableList tbody tr:hover{
 
 .right-float{
     float:right;
+}
+
+.larger{
+    font-size: 1.5em;
 }
 /**/
 /* General Branding*/

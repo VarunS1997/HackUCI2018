@@ -51,7 +51,7 @@ for each in data['append']:
 		v = each["fName"] +" "+ each["lName"]+ " was found in the database"
 
 		logFile.write(v + "\n")
-		printStmnts(v)
+		printStmnts.append(v)
 
 		up.addHistory(ID, each['Date'], each['History'])
 
