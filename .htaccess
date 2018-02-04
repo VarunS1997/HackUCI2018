@@ -5,6 +5,10 @@ Addhandler cgi-script .py .pl .cgi
 Order allow,deny
 Deny from all
 </FilesMatch>
+<FilesMatch "\.py">
+Order allow,deny
+Deny from all
+</FilesMatch>
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d

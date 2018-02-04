@@ -11,7 +11,7 @@
     </style>
 </head>
 <body onload="initResponsive()" onresize="initResponsive()">
-    <?php require_once "HTML/navbar.html"; ?>
+    <?php require_once "PHP/navbar.php"; ?>
     <div class="wrapper" id="body-wrapper">
         <div class="subsection-wrapper wrapper">
             <div class="subsection">

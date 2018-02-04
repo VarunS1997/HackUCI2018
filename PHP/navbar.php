@@ -6,7 +6,7 @@
     </div>
     <div id="navigation-bar-container">
         <ul id="navigation-bar">
-            <li><a href="myAccount.php">Get Started</a></li>
+            <li><a href="myAccount.php"><?php echo isset($_SESSION["FIRST_NAME"]) ? "Your Account" : "Get Started"; ?></a></li>
             <li><a href="about.php">About</a></li>
             <li><a href="contact.php">Contact</a></li>
         </ul>
