@@ -50,6 +50,34 @@ if($FBError || (isset($_GET["error"]) and $_GET["error"] == "access_denied")){
                 }
                  ?>
             </div>
+            <div class="subsection">
+                <?php
+                if(isset($_SESSION["IN_DB"]) && $_SESSION["IN_DB"] && isset($_SESSION["FACEBOOK_ID"])){
+
+                    $conn = loadSQL();
+                    $histTable = "Histories";
+
+                    $uDate = NULL;
+                    $uDescrip = NULL;
+
+                    $SearchSQL = $conn->prepare("SELECT DATE, DESCRIPTION FROM $histTable WHERE USER_ID=?");
+
+                    if($SearchSQL != false){
+                        $SearchSQL->bind_param("s", $_SESSION["FACEBOOK_ID"]);
+                        $SearchSQL->execute();
+                        $SearchSQL->bind_result($uDate, $uDescrip);
+
+                        echo "<p>-- MEDICAL RECORDS --<br/>";
+
+                        while($SearchSQL->fetch()){
+                            echo "$uDate: " . $uDescrip . "<br />";
+                        }
+
+                        echo "</p>";
+                    }
+                }
+                 ?>
+            </div>
         </div>
         <div class="subsection-wrapper wrapper">
             <div class="title">

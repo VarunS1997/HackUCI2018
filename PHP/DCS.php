@@ -46,10 +46,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(is_null($firstLine)){
         echo "NULL";
     } else{
-        echo "sanatree.tech/TEMP/" . $firstLine;
+        echo $firstLine;
 
         $resultsFile = fopen("../TEMP/cDCSRequests.txt", "a");
-        fwrite($resultsFile, $firstLine . PHP_EOL);
+        fwrite($resultsFile, $firstLine);
         fclose($resultsFile);
 
         $queueFile = fopen($queueSource, "w");
@@ -57,14 +57,5 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         fclose($queueFile);
 
     }
-} elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $postData = file_get_contents('php://input');
-    $postPieces = explode(":::::", $postData);
-
-    $predictedID = $postPieces[0];
-
-    $resultsFile = fopen("../TEMP/cDCSRequests.txt", "a");
-    fwrite($resultsFile, ":" . $predictedID . PHP_EOL);
-    fclose($resultsFile);
 }
  ?>

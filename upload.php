@@ -20,7 +20,7 @@
             $queueSource = "TEMP/DCSQueue.txt";
             $queueFile = fopen($queueSource, "a");
 
-            fwrite($queueFile, "sanatree.tech/" . $target_file . PHP_EOL);
+            fwrite($queueFile, "https://sanatree.tech/" . $target_file . PHP_EOL);
 
             fclose($queueFile);
         }
@@ -53,8 +53,10 @@
             <div class="subsection">
                 <?php
                 $resultsFile = fopen("TEMP/cDCSRequests.txt", "r");
+                $even = true;
                 while($data = fgets($resultsFile)){
-                    echo "<p>$data</p>";
+                    echo $even ? "<p>$data" : "$data</p>";
+                    $even = !$even;
                 }
                 fclose($resultsFile);
                 ?>
