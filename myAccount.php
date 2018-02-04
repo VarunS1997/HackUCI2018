@@ -8,7 +8,7 @@ if($FBError || (isset($_GET["error"]) and $_GET["error"] == "access_denied")){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Contact | Sanatree</title>
+    <title>Account | Sanatree</title>
 
     <?php require "PHP/stdHeader.php"; ?>
 
