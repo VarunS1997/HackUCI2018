@@ -25,14 +25,13 @@ function loadSQL(){
     return $conn;
 }
 
-$conn = loadSQL();
-$results = $conn->query("SELECT USER_ID FROM Users");
+if(isset($_GET["id"])){
+    $data = htmlspecialchars($_GET["id"]);
 
-if(is_null($results)){
-    echo mysqli_error($conn);
-} elseif ($results->num_rows > 0) {
-    while($row = $results->fetch_assoc()) {
-        echo $row["USER_ID"] . PHP_EOL;
-    }
+    $resultsFile = fopen("../TEMP/cDCSRequests.txt", "a");
+    fwrite($resultsFile, " --- " . $data . PHP_EOL);
+    fclose($resultsFile);
+
+    echo "DONE: " . $data;
 }
  ?>
