@@ -28,7 +28,7 @@ function loadSQL(){
 if($_SERVER["REQUEST_METHOD"] == "GET"){
     $queueSource = "../TEMP/DCSQueue.txt";
 
-    $queueFile = fopen($queueSource, "r+");
+    $queueFile = fopen($queueSource, "r");
 
     $firstLine = NULL;
     $newData = "";
@@ -46,22 +46,25 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(is_null($firstLine)){
         echo "NULL";
     } else{
-        echo $firstLine;
+        echo "sanatree.tech/TEMP/" . $firstLine;
+
+        $resultsFile = fopen("../TEMP/cDCSRequests.txt", "a");
+        fwrite($resultsFile, $firstLine . PHP_EOL);
+        fclose($resultsFile);
+
+        $queueFile = fopen($queueSource, "w");
+        fwrite($queueFile, $newData);
+        fclose($queueFile);
+
     }
 } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
     $postData = file_get_contents('php://input');
     $postPieces = explode(":::::", $postData);
 
-    $MLC = $postPieces[0];
-    $UIc = $postPieces[count($postPieces)-1];
+    $predictedID = $postPieces[0];
 
-    $conn = loadSQL();
-
-    $updateSQL = $conn->prepare("UPDATE Users SET MLC=? WHERE USER_ID=?");
-
-    if($updateSQL != false){
-        $updateSQL->bind_param("ss", $MLC, $UId);
-        $updateSQL->execute();
-    }
+    $resultsFile = fopen("../TEMP/cDCSRequests.txt", "a");
+    fwrite($resultsFile, ":" . $predictedID . PHP_EOL);
+    fclose($resultsFile);
 }
  ?>

@@ -28,7 +28,7 @@ function loadSQL(){
 if($_SERVER["REQUEST_METHOD"] == "GET"){
     $queueSource = "../TEMP/DCTQueue.txt";
 
-    $queueFile = fopen($queueSource, "r+");
+    $queueFile = fopen($queueSource, "r");
 
     $firstLine = NULL;
     $newData = "";
@@ -47,6 +47,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         echo "NULL";
     } else{
         echo $firstLine;
+
+        $queueFile = fopen($queueSource, "w");
+        fwrite($queueFile, $newData . PHP_EOL);
+        fclose($queueFile);
     }
 } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
     $postData = file_get_contents('php://input');
