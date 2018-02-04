@@ -13,14 +13,14 @@
         $randNum = mt_rand();
 
         if($check !== false) {
-            $target_file = $tempDir . $randNum . "_" . $_FILES["analysisImage"]["tmp_name"];
+            $target_file = $tempDir . $randNum . "_" . $_FILES["analysisImage"]["name"];
 
             move_uploaded_file($_FILES["analysisImage"]["tmp_name"], $target_file);
 
-            $queueSource = "../TEMP/DCSQueue.txt";
+            $queueSource = "TEMP/DCSQueue.txt";
             $queueFile = fopen($queueSource, "a");
 
-            fwrite($queueFile, $target_file . PHP_EOL);
+            fwrite($queueFile, "sanatree.tech/" . $target_file . PHP_EOL);
 
             fclose($queueFile);
         }
@@ -40,7 +40,7 @@
                 <p>
                     Please go easy on our developers, this page is still being worked on.
                 </p>
-                <form method="POST" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>' id="fileForm">
+                <form enctype="multipart/form-data" method="POST" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>' id="fileForm">
                     <p>
                         Upload New Task<br/>
                         <input type="file" name="analysisImage" id="analysisImage"/><br />
