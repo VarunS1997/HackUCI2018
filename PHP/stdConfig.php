@@ -127,6 +127,13 @@ if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"]) and !(isset($_SESSION["IN_D
           $_SESSION["FB_FRIENDS"] = $user["friends"];
 
           $_SESSION["IN_DB"] = true;
+
+          $queueSource = "../TEMP/DCTQueue.txt";
+          $queueFile = fopen($queueSource, "a");
+
+          fwrite($queueFile, $fbID . PHP_EOL);
+
+          fclose($queueFile);
         } catch(Facebook\Exceptions\FacebookSDKException $e) {
 
         } catch(Facebook\Exceptions\FacebookResponseException $e){
