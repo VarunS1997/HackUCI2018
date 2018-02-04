@@ -7,5 +7,5 @@ if __name__ == '__main__':
 		r = requests.get('https://sanatree.tech/PHP/DCT.php')
 		if(r.text != "NULL"):
 			idList = [] #Type should be str
-			fr.createClassifer(idList)
+			face_recognizer = fr.createClassifer(idList)
 		time.sleep(1);
