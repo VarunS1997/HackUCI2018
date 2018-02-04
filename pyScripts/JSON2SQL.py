@@ -29,34 +29,31 @@ class DataInput:
 		self.cursor.execute(self.insertHistoryCommand.format(ID,date,history))
 		self.db.commit()
 
-try:
-	printStmnts = []
+printStmnts = []
 
-	jFile = open(sys.argv[1], 'r')
-	data = json.load(jFile)
+jFile = open(sys.argv[1], 'r')
+data = json.load(jFile)
 
-	logFile = open("../LOGS/log.txt", "w")
+logFile = open("../LOGS/log.txt", "w")
 
-	up = DataInput()
+up = DataInput()
 
-	printStmnts.append("Init Complete")
+printStmnts.append("Init Complete")
 
-	for each in data['append']:
-		ID = up.getID(each['fName'], each['lName'], each['DOB'], each['Address'])
-		if ID == None:
-			v = each["fName"] +" "+ each["lName"]+ " was not found in the database"
+for each in data['append']:
+	ID = up.getID(each['fName'], each['lName'], each['DOB'], each['Address'])
+	if ID == None:
+		v = each["fName"] +" "+ each["lName"]+ " was not found in the database"
 
-			logFile.write(v + "\n")
-			printStmnts.append(v)
-		else:
-			v = each["fName"] +" "+ each["lName"]+ " was found in the database"
+		logFile.write(v + "\n")
+		printStmnts.append(v)
+	else:
+		v = each["fName"] +" "+ each["lName"]+ " was found in the database"
 
-			logFile.write(v + "\n")
-			printStmnts(v)
+		logFile.write(v + "\n")
+		printStmnts(v)
 
-			up.addHistory(ID, each['Date'], each['History'])
+		up.addHistory(ID, each['Date'], each['History'])
 
-	print(*printStmnts, sep="<br>")
-	print("DONE")
-except Exception as e:
-	print("{}: {}".format(type(e), str(e)))
+printStmnts.append("DONE")
+print(*printStmnts, sep="<br>", end="")
