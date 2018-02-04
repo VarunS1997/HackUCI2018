@@ -29,6 +29,9 @@ div#splash-wrapper{
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: bottom center;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
 }
 
 div#splash-wrapper img{

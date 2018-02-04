@@ -32,41 +32,69 @@
             <a class="button" href="myAccount.php">Get Started Now!</a>
         </div>
     </div>
-    <div class="wrapper" id="body-wrapper">
+    <div class="wrapper" id="body-wrapper" style="padding-top:0px">
+        <div class="subsection-wrapper wrapper blueBackgrounded">
+            <div class="subsection extra-padding">
+                <div class="title">What is SanaTree?</div>
+                <p class="larger">
+                    SanaTree is an invaluable tool for keeping up-to-date and comprehensive medical histories, all through platforms you already use.
+                </p>
+            </div>
+        </div>
         <div class="subsection-wrapper wrapper">
             <div class="subsection">
-                <div class="title">What is Wushu?</div>
-                <p>
-                    Wushu (武术), as practiced at UCI, is a non-contact, chinese martial arts, emphasizing on coordination and performance. Wushu, meaning "martial arts", represents a collection of all chinese martial arts, but often, the term is used to refer to the the more-modern styles of it's traditional counterpart, Kung Fu.
-                </p>
+                <div class="title">Why Do We Need This?</div>
             </div>
-            <p>
-                <a href="about.php">Learn more...</a>
-            </p>
-        </div>
-        <div class="subsection-wrapper wrapper">
-            <div class="subsection imaged-subsection">
-                <div class="title">Practice Times</div>
-                <p class="bold">
-                    Practices welcome all wushu athletes, new and old, and are held three times a week at UCI's ARC facility:
-                </p>
-                <p>
-                    Monday: 9:00 PM - 11:00 PM in the Physical Forum
-                </p>
-                <p>
-                    Wednesday: 8:30 PM - 10:30 PM in the Training Zone
-                </p>
-                <p>
-                    Saturday: 12:00 PM - 2:30 PM in the Sports Studio
-                </p>
-                <p>
-                    If you are interested in trying Wushu at UCI, stop by at any one of the practices. Your first class is absolutely free-to-try, and all you need is something comfortable to work out in, and a friendly attitude.
-                </p>
+            <div class="subsection imaged-subsection extra-padding">
+                <img src="imageAssets/medical.svg" alt="" />
+                <div class="img-text">
+                    <p class="bold">
+                        SanaTree has a mission to not only improve medical efficiency, but also raise the bar for healthcare everywhere.
+                    </p>
+                    <p>
+                        Imagine if, before you even met, your doctor already knew your familial history of diseases, allergies, and other conditions.
+                    </p>
+                    <p>
+                        Now imagine if EVERY doctor you met knew all this information and you only needed to press 2 buttons.
+                    </p>
+                    <p>
+                        Now imagine how much better your doctors can be. That's our mission.
+                    </p>
+                </div>
             </div>
         </div>
         <div class="subsection-wrapper wrapper">
-            <div class="subsection imaged-subsection">
-
+            <div class="subsection extra-padding">
+                <div class="img-text">
+                    <p class="bold">
+                        We only hope to improve the quality of your preventative measures, treatments, and diagnoses.
+                    </p>
+                    <p>
+                        With this comprehensive tracking system, your doctors can plan ahead in a way previously restricted to geneticists, but for a fraction of the cost.
+                    </p>
+                    <p>
+                        And of course, SanaTree would also save countless minutes, for both you and your doctor. And in medicine, every minute counts.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="subsection-wrapper wrapper">
+            <div class="subsection imaged-subsection extra-padding">
+                <div class="img-text">
+                    <p class="bold">
+                        Here, at SanaTree, we treat your data as we treat you -- with the utmost respect and discretion.
+                    </p>
+                    <p>
+                        Using the latest in secure communications, all of our webpages support secure (HTTPS) connections.
+                    </p>
+                    <p>
+                        We are extremely transparent with how we use your data. You can read all about it in our <a href="privacypolicy.htm">Privacy Policy</a>.
+                    </p>
+                    <p>
+                        We believe in our measures so much, that we will wipe any and all of your data from our servers whenever you want, just let us know.
+                    </p>
+                </div>
+                <img src="imageAssets/lock.svg" alt="" />
             </div>
         </div>
     </div>

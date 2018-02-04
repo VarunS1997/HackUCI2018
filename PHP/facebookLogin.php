@@ -18,7 +18,7 @@ $fb = new Facebook\Facebook([
 
 $helper = $fb->getRedirectLoginHelper();
 
-$permissions = ['email', "user_friends", "user_photos", "user_birthday"]; // Optional permissions
+$permissions = ['email', "user_birthday"]; // Optional permissions
 $loginUrl = $helper->getLoginUrl('https://sanatree.tech/myAccount.php', $permissions);
 
 header("Location: ".$loginUrl)

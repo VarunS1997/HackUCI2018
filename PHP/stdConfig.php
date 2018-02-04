@@ -89,12 +89,13 @@ if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"])){
     $histTable = "Histories";
 
     $SearchSQL = $conn->prepare("SELECT * FROM $usersTable WHERE FIRST_NAME=? AND LAST_NAME=? AND DOB=?");
-    $InsertSQL = $conn->prepare("INSERT INTO $usersTable (FIRST_NAME, LAST_NAME, DOB, START_DATE, USER_ID, ADDRESS) VALUES (?, ?, ?, ?, ?, ?)");
+    $InsertSQL = $conn->prepare("INSERT INTO $usersTable (FIRST_NAME, LAST_NAME, DOB, START_DATE, USER_ID, ADDRESS, ACCESS_TOKEN) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
     if($SearchSQL != false && $InsertSQL != false){
         try {
           // Returns a `Facebook\FacebookResponse` object
-          $response = $fb->get('/me?fields=id,name, birthday', $_SESSION["FB_ACCESS_TOKEN"]->getValue());
+          $token = $_SESSION["FB_ACCESS_TOKEN"]->getValue();
+          $response = $fb->get('/me?fields=id,name, birthday', $token);
 
           $user = $response->getGraphUser();
 
@@ -104,6 +105,7 @@ if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"])){
           $lName = $name[count($name)-1];
           $DOB = (is_null($user["birthday"])) ? "NULL" : $user["birthday"]->format("m/d/Y");
           $fbID = $user["id"];
+          $address = "Irvine, CA";
 
 
           $SearchSQL->bind_param("sss", $fName, $lName, $DOB);
@@ -112,7 +114,7 @@ if(!$FBError and isset($_SESSION["FB_ACCESS_TOKEN"])){
 
           if($SearchSQL->num_rows() == 0){
               $date = date("m/d/Y");
-              $InsertSQL->bind_param("ssssss", $fName, $lName, $DOB, $date,$fbID, $fName);
+              $InsertSQL->bind_param("sssssss", $fName, $lName, $DOB, $date,$fbID, $address, $token);
               $InsertSQL->execute();
           }
         } catch(Facebook\Exceptions\FacebookSDKException $e) {
