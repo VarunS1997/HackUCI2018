@@ -59,7 +59,7 @@ def drawAroundFaces(colored_img):
 
     # let's detect multiscale (some images may be closer to camera than others) images
     faces = f_cascade.detectMultiScale(gray, scaleFactor=SCALE_FACTOR, minNeighbors=MIN_NEIGHBORS, minSize=(height,width))
-    print(faces)
+    # print(faces)
     for (x, y, w, h) in faces:
         cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
@@ -71,7 +71,7 @@ def drawAroundFaces(colored_img):
 ########################## FACEBOOK API ##########################
 
 def getPhotosData(infoObject) -> list:
-    print(infoObject)
+    # print(infoObject)
     return infoObject["photos"]["data"]
 
 def getImageUrl(id: str) -> str:
@@ -92,7 +92,7 @@ def testGatherTrainingData(id_list):
     graph = facebook.GraphAPI(ACCESS_TOKEN)
     for n,id in enumerate(id_list):
         object = graph.get_object(id)
-        print(object)
+        # print(object)
         DICT[n] = id
         webImageUrl = getImageUrl(id)
         testImage = urlToImageNp(webImageUrl)
@@ -101,7 +101,6 @@ def testGatherTrainingData(id_list):
         if face is not None:
             faces.append(face)
             labels.append(n)
-            # print(faces)
         #Hard Coding in more Photo Data
         if "Jackson Tsoi" in object["name"]:
             img1 = cv2.imread("../imageAssets/Jackson/1.jpg")
@@ -129,10 +128,22 @@ def testGatherTrainingData(id_list):
             if face is not None:
                 faces.append(face)
                 labels.append(n)
+            img4 = cv2.imread("../imageAssets/Simon/4.jpg")
+            face, rect = detect_face(img4)
+            drawAroundFaces(img4)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
         elif "Lucas Verde" in object["name"]:
             img1 = cv2.imread("../imageAssets/Lucas/1.jpg")
             face, rect = detect_face(img1)
             drawAroundFaces(img1)
+            if face is not None:
+                faces.append(face)
+                labels.append(n)
+            img2 = cv2.imread("../imageAssets/Lucas/2.jpg")
+            face, rect = detect_face(img2)
+            drawAroundFaces(img2)
             if face is not None:
                 faces.append(face)
                 labels.append(n)
@@ -164,7 +175,8 @@ def predict(test_img, face_recognizer):
     # predict the image using our face recognizer
     prediction = face_recognizer.predict(face)
     print("PREDICTED:", prediction)
-    return prediction[0]
+    print("DICT:", DICT)
+    return DICT[prediction[0]]
 
 if __name__ == '__main__':
     fakeData = ["10204090278614708", "1849926508352506", "2069021659993333", "1645206745539012"]
@@ -177,6 +189,4 @@ if __name__ == '__main__':
 
     repFunc = repr(face_recognizer)
     rep = repr(DICT)
-    print(rep)
-    print(repFunc)
     pass
