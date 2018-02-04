@@ -1,0 +1,109 @@
+{
+	"append":[
+			{
+			"fName": "Varun",
+            "lName": "Singh",
+            "DOB": "12/01/1997",
+            "Address": "Irvine, CA",
+            "Date": "2/2/18",
+            "History": "Diagnosed with Cancer"
+			},
+			{
+			"fName": "Varun",
+            "lName": "Singh",
+            "DOB": "12/01/1997",
+            "Address": "Irvine, CA",
+            "Date": "2/6/18",
+            "History": "Still got Cancer"
+			},
+			{
+			"fName": "Varun",
+            "lName": "Singh",
+            "DOB": "12/01/1997",
+            "Address": "Irvine, CA",
+            "Date": "2/27/18",
+            "History": "Cured Cancer"
+			},
+			{
+			"fName": "Varun",
+            "lName": "Singh",
+            "DOB": "12/01/1997",
+            "Address": "Irvine, CA",
+            "Date": "4/22/18",
+            "History": "Died from dying"
+			},
+			{
+			"fName": "Simon",
+            "lName": "Lee",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/27/18",
+            "History": "got heart disease"
+			},
+			{
+			"fName": "Simon",
+            "lName": "Lee",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/29/18",
+            "History": "Got lung cancer"
+			},
+			{
+			"fName": "Lucas",
+            "lName": "Verde",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/2/18",
+            "History": "got a cold"
+			},
+			{
+			"fName": "Lucas",
+            "lName": "Verde",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/30/18",
+            "History": "Died from a cold"
+			},
+			{
+			"fName": "Lucas",
+            "lName": "Verde",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "3/23/18",
+            "History": "Came back to life"
+			},
+			{
+			"fName": "Jackson",
+            "lName": "Tsoi",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/2/18",
+            "History": "Broken leg and arm"
+			},
+			{
+			"fName": "Jackson",
+            "lName": "Tsoi",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/15/18",
+            "History": "Amputated arm and leg"
+			},
+			{
+			"fName": "Jackson",
+            "lName": "Tsoi",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/27/18",
+            "History": "started frowing new arms and legs"
+			},
+			{
+			"fName": "Jackson",
+            "lName": "Tsoi",
+            "DOB": "NULL",
+            "Address": "Irvine, CA",
+            "Date": "2/28/18",
+            "History": "Grew wings and flew away"
+			}
+
+	]
+}
