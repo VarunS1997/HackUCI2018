@@ -8,7 +8,7 @@ import json
 import base64
 import re
 
-sg = sendgrid.SendGridAPIClient(apikey='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')
+sg = sendgrid.SendGridAPIClient(apikey='')
 #from_email = Email("lverde@uci.edu")
 #to_email = Email("lverde@uci.edu")
 #subject = "Sending with SendGrid is Fun"
